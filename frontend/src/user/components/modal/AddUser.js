@@ -58,8 +58,14 @@ const AddUser = props => {
               </Form.Group>
               <Form.Group controlId="role">
                 <Form.Label>Role</Form.Label>
-                <Form.Control name="newRole" placeholder="Role"
-                  required />
+                <Form.Control
+                  as="select"
+                  name="newRole"
+                >
+                  <option value="student">Student</option>
+                  <option value="tutor">Tutor</option>
+                  <option value="admin">Admin</option>
+                </Form.Control>
                 <div className="invalid-feedback">
                   <div className="fieldError"> Invalid value.</div>
                 </div>
@@ -71,7 +77,7 @@ const AddUser = props => {
         <Modal.Footer>
           <Button variant="primary" type="submit">
             Save
-        </Button>
+          </Button>
         </Modal.Footer>
       </Form>
     </Modal >
