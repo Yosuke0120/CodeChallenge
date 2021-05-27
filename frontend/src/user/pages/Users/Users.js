@@ -20,7 +20,6 @@ export function Users(props) {
         role: "STUDENT",
       }
     );
-    addNewUser();
   }, []);
 
   const addNewUser = async () => {
@@ -42,7 +41,7 @@ export function Users(props) {
     <Container>
       <Row>
         <Col>
-          <Button>Add user</Button>
+          <Button onClick={addNewUser}>Add user</Button>
           <Table>
             <thead>
               <tr>
