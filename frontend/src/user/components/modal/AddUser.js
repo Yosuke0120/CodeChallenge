@@ -1,8 +1,7 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef } from 'react';
 import { Modal, Form, Button, Col } from 'react-bootstrap';
 
 const AddUser = props => {
-  const [newUser, setNewUser] = useState();
   const addRef = createRef();
   const onSubmitAddUser = e => {
     e.preventDefault();
@@ -16,8 +15,6 @@ const AddUser = props => {
     }
     props.save(addUser);
   }
-
-
 
   return (
     < Modal show={props.show} onHide={props.onHide} >

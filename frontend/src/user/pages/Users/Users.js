@@ -2,34 +2,40 @@ import React, { useEffect, useState } from 'react';
 import { UserApi } from '../../services/UserApi';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import AddUser from '../../components/modal/AddUser';
+import UpdateUser from '../../components/modal/UpdateUser';
 
 export const Users = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState();
+  const [updateUser, setUpdateUser] = useState();
 
-  const [show, setShow] = useState(false)
-  const handleShow = () => setShow(true)
-  const handleClose = () => setShow(false)
+  const [addShow, setAddShow] = useState(false);
+  const handleAddShow = () => setAddShow(true);
+  const handleAddClose = () => setAddShow(false);
+
+  const [updateShow, setUpdateShow] = useState(false)
+  const handleUpdateShow = user => {
+    setUpdateShow(true);
+    user && setUpdateUser(user);
+  }
+  const handleUpdateClose = () => setUpdateShow(false);
 
   useEffect(() => {
     UserApi.getAllUsers()
       .then((users) => {
         setUsers(users);
       });
-    setNewUser(
-      {
-        username: "jhondoe",
-        email: "jhondoe@email.com",
-        full_name: "Jhon Doe",
-        password: "jhondoe123",
-        role: "STUDENT",
-      }
-    );
   }, [users]);
 
   const addNewUser = async user => {
     user && await UserApi.createUser(user);
     // console.log(user);
+  }
+
+  const updateNewUser = async (id, user) => {
+    console.log('user', user);
+    console.log('id', id);
+    user && await UserApi.updateUser(id, user);
   }
 
   const renderUsers = users.map((user, idx) => {
@@ -40,7 +46,7 @@ export const Users = () => {
         <td>{user.role}</td>
         <td>{user.created_at}</td>
         <td>
-          <Button>More details</Button>
+          <Button onClick={() => { handleUpdateShow(user) }}>More details</Button>
         </td>
       </tr>
     )
@@ -50,7 +56,7 @@ export const Users = () => {
       <Container>
         <Row>
           <Col>
-            <Button onClick={handleShow}>Add user</Button>
+            <Button onClick={handleAddShow}>Add user</Button>
             <Table>
               <thead>
                 <tr>
@@ -68,7 +74,8 @@ export const Users = () => {
           </Col>
         </Row>
       </Container>
-      <AddUser show={show} onHide={handleClose} save={addNewUser} />
+      <AddUser show={addShow} onHide={handleAddClose} save={addNewUser} />
+      <UpdateUser show={updateShow} onHide={handleUpdateClose} selectedUser={updateUser} update={updateNewUser} />
     </>
   )
 }
