@@ -34,12 +34,16 @@ export const Users = () => {
   }
 
   const updateNewUser = (id, user) => {
-    console.log('id', typeof id);
     user && UserApi.updateUser(id, user).then(async res => {
       const updateUsers = await UserApi.getAllUsers();
       setUsers(updateUsers);
       handleUpdateClose();
     });
+  }
+
+  const delUser = user => {
+    user && UserApi.deleteUser(user._id);
+    setUsers(users.filter(person => person._id !== user._id));
   }
 
   const renderUsers = users.map((user, idx) => {
@@ -51,6 +55,7 @@ export const Users = () => {
         <td>{user.created_at}</td>
         <td>
           <Button onClick={() => { handleUpdateShow(user) }}>More details</Button>
+          <Button variant="danger" className="ml-2" onClick={() => { delUser(user) }}>Delete</Button>
         </td>
       </tr>
     )
@@ -60,8 +65,8 @@ export const Users = () => {
       <Container>
         <Row>
           <Col>
-            <Button onClick={handleAddShow}>Add user</Button>
-            <Table>
+            <div className="d-flex justify-content-end my-4"><Button onClick={handleAddShow}>Add user</Button></div>
+            <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Email</th>
