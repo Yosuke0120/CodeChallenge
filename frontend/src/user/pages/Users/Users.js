@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { UserApi } from '../../services/UserApi';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
+import AddUser from '../../components/modal/AddUser';
 
 export function Users(props) {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState();
 
+  const [show, setShow] = useState(false)
+  const handleShow = () => setShow(true)
+  const handleClose = () => setShow(false)
 
   useEffect(() => {
     UserApi.getAllUsers()
@@ -24,7 +28,8 @@ export function Users(props) {
   }, [users]);
 
   const addNewUser = async () => {
-    newUser && await UserApi.createUser(newUser)
+    // newUser && await UserApi.createUser(newUser)
+    handleShow();
   }
 
   const renderUsers = users.map((user, idx) => {
@@ -41,26 +46,29 @@ export function Users(props) {
     )
   })
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Button onClick={addNewUser}>Add user</Button>
-          <Table>
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Full Name</th>
-                <th>Role</th>
-                <th>Created At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {renderUsers}
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <Button onClick={addNewUser}>Add user</Button>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Full Name</th>
+                  <th>Role</th>
+                  <th>Created At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {renderUsers}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </Container>
+      <AddUser show={show} onHide={handleClose} />
+    </>
   )
 }
