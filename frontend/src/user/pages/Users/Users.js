@@ -26,15 +26,20 @@ export const Users = () => {
       });
   }, []);
 
-  const addNewUser = async user => {
-    user && await UserApi.createUser(user);
-    // console.log(user);
+  const addNewUser = user => {
+    user && UserApi.createUser(user).then(res => {
+      setUsers([...users, user]);
+      handleAddClose();
+    });
   }
 
-  const updateNewUser = async (id, user) => {
-    console.log('user', user);
-    console.log('id', id);
-    user && await UserApi.updateUser(id, user);
+  const updateNewUser = (id, user) => {
+    console.log('id', typeof id);
+    user && UserApi.updateUser(id, user).then(async res => {
+      const updateUsers = await UserApi.getAllUsers();
+      setUsers(updateUsers);
+      handleUpdateClose();
+    });
   }
 
   const renderUsers = users.map((user, idx) => {
