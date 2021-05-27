@@ -6,7 +6,7 @@ import UpdateUser from '../../components/modal/UpdateUser';
 
 export const Users = () => {
   const [users, setUsers] = useState([]);
-  const [updateNewUser, setUpdateNewUser] = useState();
+  const [updateUser, setUpdateUser] = useState();
 
   const [addShow, setAddShow] = useState(false);
   const handleAddShow = () => setAddShow(true);
@@ -15,7 +15,7 @@ export const Users = () => {
   const [updateShow, setUpdateShow] = useState(false)
   const handleUpdateShow = user => {
     setUpdateShow(true);
-    user && setUpdateNewUser(user);
+    user && setUpdateUser(user);
   }
   const handleUpdateClose = () => setUpdateShow(false);
 
@@ -24,7 +24,7 @@ export const Users = () => {
       .then((users) => {
         setUsers(users);
       });
-  }, [users]);
+  }, []);
 
   const addNewUser = async user => {
     user && await UserApi.createUser(user);
@@ -74,7 +74,7 @@ export const Users = () => {
         </Row>
       </Container>
       <AddUser show={addShow} onHide={handleAddClose} save={addNewUser} />
-      <UpdateUser show={updateShow} onHide={handleUpdateClose} selectedUser={updateNewUser} update={updateNewUser} />
+      <UpdateUser show={updateShow} onHide={handleUpdateClose} selectedUser={updateUser} update={updateNewUser} />
     </>
   )
 }

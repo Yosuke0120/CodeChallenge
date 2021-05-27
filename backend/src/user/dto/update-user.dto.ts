@@ -1,11 +1,5 @@
 import { IsEmail, IsEnum, IsNotEmpty, Length } from 'class-validator';
-
-enum Role {
-  student = 'STUDENT',
-  tutor = 'TUTOR',
-  admin = 'ADMIN',
-}
-
+import { Role } from './role.enum';
 export class UpdateUserDto {
   @IsNotEmpty()
   username: string;

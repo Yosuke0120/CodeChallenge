@@ -54,9 +54,9 @@ const AddUser = props => {
               <Form.Group controlId="role">
                 <Form.Label>Role</Form.Label>
                 <Form.Control as="select" name="newRole" required>
-                  <option value="student">Student</option>
-                  <option value="tutor">Tutor</option>
-                  <option value="admin">Admin</option>
+                  <option value="STUDENT">Student</option>
+                  <option value="TUTOR">Tutor</option>
+                  <option value="ADMIN">Admin</option>
                 </Form.Control>
                 <div className="invalid-feedback">
                   <div className="fieldError"> Invalid value.</div>

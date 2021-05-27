@@ -17,6 +17,7 @@ const getUser = async (id) => {
 }
 
 const updateUser = async (id, user) => {
+
   return axios.put(`${prefix}/${id}`, user)
     .then((res) => {
       return res.data;
