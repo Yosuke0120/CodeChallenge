@@ -6,8 +6,7 @@ import UpdateUser from '../../components/modal/UpdateUser';
 
 export const Users = () => {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState();
-  const [updateUser, setUpdateUser] = useState();
+  const [updateNewUser, setUpdateNewUser] = useState();
 
   const [addShow, setAddShow] = useState(false);
   const handleAddShow = () => setAddShow(true);
@@ -16,7 +15,7 @@ export const Users = () => {
   const [updateShow, setUpdateShow] = useState(false)
   const handleUpdateShow = user => {
     setUpdateShow(true);
-    user && setUpdateUser(user);
+    user && setUpdateNewUser(user);
   }
   const handleUpdateClose = () => setUpdateShow(false);
 
@@ -75,7 +74,7 @@ export const Users = () => {
         </Row>
       </Container>
       <AddUser show={addShow} onHide={handleAddClose} save={addNewUser} />
-      <UpdateUser show={updateShow} onHide={handleUpdateClose} selectedUser={updateUser} update={updateNewUser} />
+      <UpdateUser show={updateShow} onHide={handleUpdateClose} selectedUser={updateNewUser} update={updateNewUser} />
     </>
   )
 }
