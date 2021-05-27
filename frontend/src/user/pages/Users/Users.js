@@ -17,6 +17,7 @@ export function Users(props) {
         username: "jhondoe",
         email: "jhondoe@email.com",
         full_name: "Jhon Doe",
+        password: "jhondoe123",
         role: "STUDENT",
       }
     );
@@ -26,16 +27,18 @@ export function Users(props) {
     newUser && await UserApi.createUser(newUser)
   }
 
-  const renderUsers = users.map((user) => {
-    return <tr>
-      <td>{user.email}</td>
-      <td>{user.full_name}</td>
-      <td>{user.role}</td>
-      <td>{user.created_at}</td>
-      <td>
-        <Button>More details</Button>
-      </td>
-    </tr>
+  const renderUsers = users.map((user, idx) => {
+    return (
+      <tr key={idx}>
+        <td>{user.email}</td>
+        <td>{user.full_name}</td>
+        <td>{user.role}</td>
+        <td>{user.created_at}</td>
+        <td>
+          <Button>More details</Button>
+        </td>
+      </tr>
+    )
   })
   return (
     <Container>
