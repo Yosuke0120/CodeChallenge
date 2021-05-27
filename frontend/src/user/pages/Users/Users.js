@@ -20,10 +20,10 @@ export function Users(props) {
         role: "STUDENT",
       }
     );
-  }, []);
+  }, [users]);
 
   const addNewUser = async () => {
-    newUser && console.log(newUser);
+    newUser && await UserApi.createUser(newUser)
   }
 
   const renderUsers = users.map((user) => {
