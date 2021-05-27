@@ -6,6 +6,7 @@ const AddUser = props => {
   const addRef = createRef();
   const onSubmitAddUser = e => {
     e.preventDefault();
+    e.target.className += " was-validated";
     const addUser = {
       username: addRef.current.name.value,
       email: addRef.current.email.value,
@@ -13,8 +14,7 @@ const AddUser = props => {
       password: addRef.current.pass.value,
       role: addRef.current.role.value
     }
-    setNewUser(addUser);
-    console.log('addUser', addUser);
+    props.save(addUser);
   }
 
 
@@ -25,7 +25,7 @@ const AddUser = props => {
         <Modal.Title>Add New User</Modal.Title>
       </Modal.Header>
 
-      <Form noValidate ref={addRef} onSubmit={onSubmitAddUser}>
+      <Form className="needs-validation" noValidate ref={addRef} onSubmit={onSubmitAddUser}>
         <Modal.Body>
           <Form.Row>
             <Col>
@@ -38,30 +38,25 @@ const AddUser = props => {
               </Form.Group>
               <Form.Group controlId="email">
                 <Form.Label>Email</Form.Label>
-                <Form.Control name="newEmail" placeholder="Email"
-                  required />
+                <Form.Control name="newEmail" placeholder="Email" type="email" required />
                 <div className="invalid-feedback">
                   <div className="fieldError"> Invalid value.</div>
                 </div>
               </Form.Group>
               <Form.Group controlId="fullName">
                 <Form.Label>Full Name</Form.Label>
-                <Form.Control name="newFullName" placeholder="Full Name"
-                  required />
+                <Form.Control name="newFullName" placeholder="Full Name" required />
                 <div className="invalid-feedback">
                   <div className="fieldError"> Invalid value.</div>
                 </div>
               </Form.Group>
               <Form.Group controlId="pass">
                 <Form.Label>Password</Form.Label>
-                <Form.Control name="newPass" placeholder="Password" />
+                <Form.Control name="newPass" placeholder="Password" required />
               </Form.Group>
               <Form.Group controlId="role">
                 <Form.Label>Role</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="newRole"
-                >
+                <Form.Control as="select" name="newRole" required>
                   <option value="student">Student</option>
                   <option value="tutor">Tutor</option>
                   <option value="admin">Admin</option>

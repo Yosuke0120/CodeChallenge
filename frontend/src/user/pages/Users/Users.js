@@ -3,7 +3,7 @@ import { UserApi } from '../../services/UserApi';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import AddUser from '../../components/modal/AddUser';
 
-export function Users(props) {
+export const Users = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState();
 
@@ -27,9 +27,9 @@ export function Users(props) {
     );
   }, [users]);
 
-  const addNewUser = async () => {
-    // newUser && await UserApi.createUser(newUser)
-    handleShow();
+  const addNewUser = async user => {
+    user && await UserApi.createUser(user);
+    // console.log(user);
   }
 
   const renderUsers = users.map((user, idx) => {
@@ -50,7 +50,7 @@ export function Users(props) {
       <Container>
         <Row>
           <Col>
-            <Button onClick={addNewUser}>Add user</Button>
+            <Button onClick={handleShow}>Add user</Button>
             <Table>
               <thead>
                 <tr>
@@ -68,7 +68,7 @@ export function Users(props) {
           </Col>
         </Row>
       </Container>
-      <AddUser show={show} onHide={handleClose} />
+      <AddUser show={show} onHide={handleClose} save={addNewUser} />
     </>
   )
 }
