@@ -6,14 +6,26 @@ const AddUser = props => {
   const onSubmitAddUser = e => {
     e.preventDefault();
     e.target.className += " was-validated";
+
+    addRef.current.email.value = !checkEmail(addRef.current.email.value) && "";
+    addRef.current.pass.value = !checkPassword(addRef.current.pass.value) && "";
+
     const addUser = {
       username: addRef.current.name.value,
-      email: addRef.current.email.value,
+      email: addRef.current.email.value && checkEmail(addRef.current.email.value),
       full_name: addRef.current.fullName.value,
-      password: addRef.current.pass.value,
+      password: addRef.current.pass.value && checkPassword(addRef.current.pass.value),
       role: addRef.current.role.value
     }
-    props.save(addUser);
+    addUser.email && addUser.password && props.save(addUser);
+  }
+
+  const checkEmail = (email) => {
+    return email && email.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+  }
+
+  const checkPassword = (pass) => {
+    return pass && pass.length > 5;
   }
 
   return (
@@ -49,7 +61,7 @@ const AddUser = props => {
               </Form.Group>
               <Form.Group controlId="pass">
                 <Form.Label>Password</Form.Label>
-                <Form.Control name="newPass" placeholder="Password" required />
+                <Form.Control name="newPass" placeholder="Password should be over 6 letters" required />
               </Form.Group>
               <Form.Group controlId="role">
                 <Form.Label>Role</Form.Label>
