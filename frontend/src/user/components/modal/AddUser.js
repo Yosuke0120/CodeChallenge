@@ -7,14 +7,14 @@ const AddUser = props => {
     e.preventDefault();
     e.target.className += " was-validated";
 
-    addRef.current.email.value = !checkEmail(addRef.current.email.value) && "";
-    addRef.current.pass.value = !checkPassword(addRef.current.pass.value) && "";
+    addRef.current.email.value = checkEmail(addRef.current.email.value) ? addRef.current.email.value : "";
+    addRef.current.pass.value = checkPassword(addRef.current.pass.value) ? addRef.current.pass.value : "";
 
     const addUser = {
       username: addRef.current.name.value,
-      email: addRef.current.email.value && checkEmail(addRef.current.email.value),
+      email: addRef.current.email.value,
       full_name: addRef.current.fullName.value,
-      password: addRef.current.pass.value && checkPassword(addRef.current.pass.value),
+      password: addRef.current.pass.value,
       role: addRef.current.role.value
     }
     addUser.email && addUser.password && props.save(addUser);

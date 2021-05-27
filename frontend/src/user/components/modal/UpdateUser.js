@@ -9,6 +9,10 @@ const UpdateUser = props => {
   const onSubmitUpdateUser = e => {
     e.preventDefault();
     e.target.className += " was-validated";
+
+    updateRef.current.email.value = checkEmail(updateRef.current.email.value) ? updateRef.current.email.value : "";
+    updateRef.current.pass.value = checkPassword(updateRef.current.pass.value) ? updateRef.current.pass.value : "";
+
     const updateUser = {
       username: updateRef.current.name.value,
       email: updateRef.current.email.value,
@@ -16,7 +20,15 @@ const UpdateUser = props => {
       password: updateRef.current.pass.value,
       role: updateRef.current.role.value
     }
-    props.update(props.selectedUser._id, updateUser);
+    updateRef.email && updateRef.password && props.update(props.selectedUser._id, updateUser);
+  }
+
+  const checkEmail = (email) => {
+    return email && email.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+  }
+
+  const checkPassword = (pass) => {
+    return pass && pass.length > 5;
   }
 
   return (
@@ -52,7 +64,7 @@ const UpdateUser = props => {
               </Form.Group>
               <Form.Group controlId="pass">
                 <Form.Label>Password</Form.Label>
-                <Form.Control name="newPass" placeholder="Password" required defaultValue={props.selectedUser ? props.selectedUser.password : ""} />
+                <Form.Control name="newPass" placeholder="Password should be over 6 letters" required defaultValue={props.selectedUser ? props.selectedUser.password : ""} />
               </Form.Group>
               <Form.Group controlId="role">
                 <Form.Label>Role</Form.Label>
